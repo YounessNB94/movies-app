@@ -1,3 +1,5 @@
+
+import { Header } from "../../shared/Header";
 import React from "react";
 import "./Details.css";
 type DetailMovieProps = {
@@ -35,5 +37,6 @@ export const Details = ({}: DetailMovieProps) => {
         </div>
       </div>
     </>
+
   );
 };
