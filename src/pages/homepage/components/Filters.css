@@ -1,0 +1,63 @@
+.sidebar {
+  background-color: #000;
+  width: 250px;
+  padding: 0px;
+  height: auto;
+  position: relative;
+}
+
+.menu {
+  background-color: #000;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.input-container .radio-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+}
+.input-container label {
+  cursor: pointer;
+}
+.input-container input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.input-container input:checked + .radio-content {
+  background-color: blue;
+}
+
+.option-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 3rem;
+  border-radius: 1rem;
+  position: relative;
+  transition: 0.5s;
+  gap: 0.7rem;
+  cursor: pointer;
+  border: none;
+}
+.round-option-style:hover {
+  box-shadow: 0 0 12px blue;
+}
+.round-option-style:active {
+  transform: scale(0.8);
+}
