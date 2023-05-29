@@ -1,3 +1,8 @@
+
+
+import { Details } from "./pages/details/Details.tsx";
+
+
 import React, { useEffect, useState } from "react";
 
 import "./App.css";
@@ -92,7 +97,17 @@ const App = () => {
           searchMovie={searchForMovie}
         />
         <CardsList moviesList={searchField} />
+          <div>
+      
+      <Details
+        title="The Unbearable Weight of Massive Talent"
+        poster_path="./public/imgUWOAMT.jpg"
+        overview="blabla"
+        genre_ids={1}
+      />
       </div>
+      
+
     </div>
   );
 };
