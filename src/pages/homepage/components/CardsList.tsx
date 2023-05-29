@@ -1,9 +1,9 @@
 import "./CardsList.css";
 import { Card } from "./Card";
-import { movieType } from "../../../App";
+import { Movie } from "../../../models/Movie";
 
 type movieList = {
-  moviesList: movieType[];
+  moviesList: Movie[];
 };
 
 export const CardsList = ({ moviesList }: movieList) => {
@@ -15,7 +15,7 @@ export const CardsList = ({ moviesList }: movieList) => {
             key={movie.id}
             id={movie.id}
             title={movie.title}
-            img={movie.backdrop_path}
+            poster_path={movie.poster_path}
           />
         );
       })}
