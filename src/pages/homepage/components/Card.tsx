@@ -1,14 +1,8 @@
+import { Movie } from "../../../models/Movie";
 import "./Card.css";
 
-import { useNavigate } from "react-router-dom";
 
-type movie = {
-  id: number;
-  title: string;
-  img: string;
-};
-
-export const Card = ({ id, title, img }: movie) => {
+export const Card = ({ id, title, poster_path }: Movie) => {
   return (
     <div
       key={id}
@@ -17,7 +11,10 @@ export const Card = ({ id, title, img }: movie) => {
         console.log(id);
       }}
     >
-      <img src={`http://image.tmdb.org/t/p/w500${img}`} alt="Film 1" />
+      <img
+        src={`http://image.tmdb.org/t/p/w500${poster_path}`}
+        alt="Film 1"
+      />
       <h3>{title}</h3>
     </div>
   );

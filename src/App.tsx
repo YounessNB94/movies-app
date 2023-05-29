@@ -1,7 +1,4 @@
-
-
 import { Details } from "./pages/details/Details.tsx";
-
 
 import React, { useEffect, useState } from "react";
 
@@ -10,33 +7,39 @@ import { Header } from "./shared/Header";
 import { Filters } from "./pages/homepage/components/Filters";
 import { CardsList } from "./pages/homepage/components/CardsList";
 import { getData } from "./api/data";
-import { Categories } from "./models/Category";
+import { Categories } from "./models/Categories.ts";
 import { MoviesList } from "./models/MoviesList";
-
-export type movieType = {
-  backdrop_path: string;
-  id: number;
-  title: string;
-};
+import { Movie } from "./models/Movie.ts";
+import { getMovieById } from "./api/Movie.ts";
 
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [categoryList, setCategoryList] = useState<Categories | null>(null);
-  const [moviesArraysList, setMoviesArraysList] = useState<movieType[]>([
-    { backdrop_path: "", id: 0, title: "" },
+  const [moviesArraysList, setMoviesArraysList] = useState<Movie[]>([
+    {
+      id: "",
+      title: "",
+      poster_path: "",
+    },
   ]);
 
   const [searchField, setSearchField] = useState(moviesArraysList);
+  const [movie, setMovie] = useState<Movie>({
+    id: "",
+    title: "",
+    poster_path: "",
+  });
 
-  const getCategories = async () => {
-    // const categoryCall = await getData<Categories>(
-    //   `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`
-    // );
-    // setCategoryList(categoryCall);
-  };
+  // const getCategories = async () => {
+  //   const categoryCall = await getData<Categories>(
+  //     `https://api.themoviedb.org/3/genre/movie/list?api_key=${
+  //       import.meta.env.VITE_API_KEY
+  //     }`
+  //   );
+  //   setCategoryList(categoryCall);
+  // };
 
   const getMovies = async () => {
-    console.log(import.meta.env.VITE_API_KEY);
     const movieCall = await getData<MoviesList>(
       `https://api.themoviedb.org/3/trending/all/day?api_key=${
         import.meta.env.VITE_API_KEY
@@ -50,10 +53,12 @@ const App = () => {
   }, []);
 
   const getMoviesByCategory = async (id: Number) => {
-    // const movieCall = await getData<MoviesList>(
-    //   `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=fr-EU&with_genres=${id}`
-    // );
-    // setSearchField(movieCall.results);
+    const movieCall = await getData<MoviesList>(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${
+        import.meta.env.VITE_API_KEY
+      }&language=fr-EU&with_genres=${id}`
+    );
+    setSearchField(movieCall.results);
   };
 
   ///////////////////////get movies
@@ -65,6 +70,15 @@ const App = () => {
   ////////////////////get category
   useEffect(() => {
     getCategories();
+  }, []);
+
+  //////////////////geting movie data
+  useEffect(() => {
+    const getMovie = async () => {
+      const data = await getMovieById("550");
+      setMovie(data);
+    };
+    getMovie();
   }, []);
 
   ///////////////////////////////searching
@@ -89,26 +103,19 @@ const App = () => {
 
   return (
     <div className="main">
-      <Header />
+      {/* <Header />
       <div id="container">
         <Filters
           categoryList={categoryList}
           radioClick={toggleRadio}
           searchMovie={searchForMovie}
         />
-        <CardsList moviesList={searchField} />
-          <div>
-      
-      <Details
-        title="The Unbearable Weight of Massive Talent"
-        poster_path="./public/imgUWOAMT.jpg"
-        overview="blabla"
-        genre_ids={1}
-      />
+        <CardsList moviesList={searchField} /> */}
+      <div>
+        <Details movie={movie} />
       </div>
-      
-
     </div>
+    // </div>
   );
 };
 

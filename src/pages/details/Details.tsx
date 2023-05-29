@@ -1,42 +1,40 @@
-
 import { Header } from "../../shared/Header";
 import React from "react";
 import "./Details.css";
-type DetailMovieProps = {
-  title: string;
-  poster_path: string;
-  overview: string;
-  genre_ids: number;
+import { Movie } from "../../models/Movie";
+
+type Data = {
+  movie: Movie;
 };
-export const Details = ({}: DetailMovieProps) => {
+export const Details = ({ movie }: Data) => {
   return (
     <>
       <header className="header">
-        <a href="#" onclick="location.reload()">
+        <a href="#">
           <h1>MovieApp</h1>
         </a>
       </header>
       <div className="main">
         <div className="film-card">
-          <img src="/imgUWOAMT.jpg" alt="image" />
+          <img
+            src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+            alt="image"
+          />
         </div>
         <div className="Details">
-          <h1>The Unbearable weight of massive talent</h1>
+          <h1>{movie.title ? movie.title : movie.name}</h1>
           <div className="Genre">
             <h2>Genre</h2>
-            <p>Action</p>
-            <p>Comedy</p>
+            {movie.genres?.map((type) => {
+              return <p key={type.id}>{type.name}</p>;
+            })}
           </div>
           <div className="Description">
             <h2>Overview</h2>
-            <p>
-              Moviestar Nick Cage is channeling his iconic characters as he's
-              caught between a superfan and a CIA agent.
-            </p>
+            <p>{movie.overview}</p>
           </div>
         </div>
       </div>
     </>
-
   );
 };

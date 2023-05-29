@@ -1,9 +1,5 @@
+import { Movie } from "./Movie";
+
 export interface MoviesList {
-  results: [
-    {
-      backdrop_path: string;
-      id: number;
-      title: string;
-    }
-  ];
+  results: [Movie];
 }
