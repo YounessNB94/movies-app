@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Categories } from "../../models/category";
+import { Category } from "../../models/category";
 import { Movie } from "../../models/movie";
 import { Header } from "../../shared/Header";
 import { Filters } from "./components/Filters";
 import { CardsList } from "./components/CardsList";
 import {
   getTrendMovies,
-  getCategories,
   getMoviesByCategory,
   getMoviesBySearch,
 } from "../../api/movieApiCalls";
 import "./HomePage.css";
+import { getCategories } from "../../api/categoryApiCalls";
 
 export const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [categoryList, setCategoryList] = useState<Categories | null>(null);
+  const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [moviesArraysList, setMoviesArraysList] = useState<Movie[]>([
     {
       id: "",
@@ -40,7 +40,7 @@ export const HomePage = () => {
   useEffect(() => {
     const categoryList = async () => {
       const data = await getCategories();
-      setCategoryList(data);
+      setCategoryList(data.genres);
     };
     categoryList();
   }, []);
