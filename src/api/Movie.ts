@@ -3,12 +3,11 @@
 // getBySearch
 
 import axios from "axios";
-import { Movie } from "../models/Movie";
+import { Movie } from "../models/movie";
 import { getData } from "./data";
-import { Categories } from "../models/Categories";
-import { MoviesList } from "../models/MoviesList";
+import { Categories } from "../models/category";
+import { MoviesList } from "../models/moviesList";
 const API_KEY = import.meta.env.VITE_API_KEY;
-
 
 export const getTrendMovies = async () => {
   const movieUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=1`;
@@ -35,5 +34,3 @@ export const getMovieById = async (id: string) => {
   const movieUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
   return await getData<Movie>(movieUrl);
 };
-
-

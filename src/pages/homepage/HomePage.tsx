@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Categories } from "../../models/Categories";
-import { Movie } from "../../models/Movie";
+import { Categories } from "../../models/category";
+import { Movie } from "../../models/movie";
 import { Header } from "../../shared/Header";
 import { Filters } from "./components/Filters";
 import { CardsList } from "./components/CardsList";
@@ -9,7 +9,7 @@ import {
   getCategories,
   getMoviesByCategory,
   getMoviesBySearch,
-} from "../../api/MovieApiCalls";
+} from "../../api/movieApiCalls";
 import "./HomePage.css";
 
 export const HomePage = () => {

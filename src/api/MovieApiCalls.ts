@@ -3,19 +3,19 @@
 // getBySearch
 
 import { Movie } from "../models/Movie";
-import { getData } from "./data";
-import { Categories } from "../models/Categories";
+import { getData } from "./Data";
+import { Category } from "../models/category";
 import { MoviesList } from "../models/MoviesList";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const getTrendMovies = async () => {
-  const movieUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=1`;
+  const movieUrl = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&page=1`;
   return await getData<MoviesList>(movieUrl);
 };
 
 export const getCategories = async () => {
   const movieUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
-  return await getData<Categories>(movieUrl);
+  return await getData<{ genres: Category[] }>(movieUrl);
 };
 
 export const getMoviesBySearch = async (search: string) => {
@@ -33,6 +33,3 @@ export const getMovieById = async (id: string) => {
   const movieUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
   return await getData<Movie>(movieUrl);
 };
-
-
-

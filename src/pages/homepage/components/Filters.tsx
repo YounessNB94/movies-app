@@ -1,4 +1,4 @@
-import { Categories } from "../../../models/Categories";
+import { Categories } from "../../../models/category";
 import "./filters.css";
 
 type FilterProps = {

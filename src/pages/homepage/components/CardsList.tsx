@@ -1,6 +1,6 @@
 import "./CardsList.css";
 import { Card } from "./Card";
-import { Movie } from "../../../models/Movie";
+import { Movie } from "../../../models/movie";
 import { Link } from "react-router-dom";
 
 type movieList = {
