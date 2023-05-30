@@ -6,7 +6,7 @@ export const Card = ({ id, title, poster_path }: Movie) => {
   return (
     <div
       key={id}
-      className="film-card"
+      className="movie-card"
       onClick={(e) => {
         console.log(id);
       }}

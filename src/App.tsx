@@ -10,7 +10,7 @@ import { getData } from "./api/data";
 import { Categories } from "./models/Categories.ts";
 import { MoviesList } from "./models/MoviesList";
 import { Movie } from "./models/Movie.ts";
-import { getMovieById } from "./api/Movie.ts";
+import { getCategories, getMovieById } from "./api/Movie.ts";
 
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -29,15 +29,6 @@ const App = () => {
     title: "",
     poster_path: "",
   });
-
-  // const getCategories = async () => {
-  //   const categoryCall = await getData<Categories>(
-  //     `https://api.themoviedb.org/3/genre/movie/list?api_key=${
-  //       import.meta.env.VITE_API_KEY
-  //     }`
-  //   );
-  //   setCategoryList(categoryCall);
-  // };
 
   const getMovies = async () => {
     const movieCall = await getData<MoviesList>(
@@ -67,11 +58,6 @@ const App = () => {
   //   setMovies(moviesLists);
   // }, []);
 
-  ////////////////////get category
-  useEffect(() => {
-    getCategories();
-  }, []);
-
   //////////////////geting movie data
   useEffect(() => {
     const getMovie = async () => {
@@ -81,6 +67,14 @@ const App = () => {
     getMovie();
   }, []);
 
+  //////////////////geting movie data
+  useEffect(() => {
+    const getCategory = async () => {
+      const data = await getCategories();
+      setCategoryList(data);
+    };
+    getCategory();
+  }, []);
   ///////////////////////////////searching
   useEffect(() => {
     const searchFiltering = () => {
@@ -103,19 +97,20 @@ const App = () => {
 
   return (
     <div className="main">
-      {/* <Header />
+      <Header />
       <div id="container">
         <Filters
           categoryList={categoryList}
           radioClick={toggleRadio}
           searchMovie={searchForMovie}
         />
-        <CardsList moviesList={searchField} /> */}
-      <div>
+        <CardsList moviesList={searchField} />
+        {/* <div>
         <Details movie={movie} />
+      </div> */}
       </div>
+      //{" "}
     </div>
-    // </div>
   );
 };
 
