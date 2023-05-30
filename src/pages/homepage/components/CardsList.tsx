@@ -9,7 +9,7 @@ type movieList = {
 
 export const CardsList = ({ moviesList }: movieList) => {
   return (
-    <div className="film-list">
+    <div className="movie-list">
       {moviesList.map((movie) => {
         return (
           <Card

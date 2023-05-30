@@ -1,18 +1,71 @@
 .sidebar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   background-color: #000;
-  width: 250px;
+  width: 50%;
   padding: 0px;
   height: auto;
   position: relative;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b10000;
+  border-radius: 10px;
+}
 .menu {
-  background-color: #000;
+  position: fixed;
   list-style-type: none;
-  margin: 0;
+  margin-left: auto;
   padding: 0;
   color: white;
+  /* width: 30%; */
+  height: 100%;
+  overflow-y: scroll;
+  text-align: center;
 }
+.input-wrapper {
+  margin: auto;
+  background-color: #343434;
+  width: 85%;
+  border-radius: 0.5rem;
+  height: 2rem;
+  padding: 0 15px;
+  box-shadow: 0 0 1px #ddd;
+  display: flex;
+  align-items: center;
+}
+.input-wrapper input {
+  color: white;
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+::placeholder {
+  color: rgba(245, 222, 179, 0.584);
+}
+.menu .search-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  border-radius: 1rem;
+}
+/* .search-input input {
+  width: 150px
+} */
 
 .input-container .radio-content {
   display: flex;
@@ -38,7 +91,7 @@
 }
 
 .input-container input:checked + .radio-content {
-  background-color: blue;
+  background-color: red;
 }
 
 .option-style {
@@ -55,9 +108,7 @@
   cursor: pointer;
   border: none;
 }
-.round-option-style:hover {
-  box-shadow: 0 0 12px blue;
-}
+
 .round-option-style:active {
   transform: scale(0.8);
 }

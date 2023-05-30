@@ -15,13 +15,15 @@ export const Filters = ({
   return (
     <div className="sidebar">
       <ul className="menu" onClick={radioClick}>
-        <li>
+        <li className="search-input">
           <h3>Search</h3>
-          <input
-            type="search"
-            placeholder="search for movie"
-            onChange={searchMovie}
-          />
+          <div className="input-wrapper">
+            <input
+              type="search"
+              placeholder="Search for movie..."
+              onChange={searchMovie}
+            />
+          </div>
         </li>
         <li>
           <h3>Genre</h3>
