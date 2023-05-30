@@ -49,16 +49,14 @@ header a {
   text-align: center;
   background-color: #0000;
 }
-.menu li button :hover{
+.menu li button :hover {
   background-color: #b10000;
-
 }
 
-.menu input{
-margin-bottom:20px ;
-margin-right:10px ;
-margin-left:10px ;
-
+.menu input {
+  margin-bottom: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 .menu li h3 {
   margin: 0;
@@ -67,8 +65,7 @@ margin-left:10px ;
   color: #fff;
   background-color: #252525;
 }
-.menu li h4{
-
+.menu li h4 {
   padding: 10px;
   margin: 0;
   color: #fff;
