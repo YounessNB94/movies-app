@@ -15,13 +15,11 @@ export const CardsList = ({ moviesList }: movieList) => {
             key={movie.id}
             id={movie.id}
             title={movie.title}
+            name={movie.name}
             poster_path={movie.poster_path}
           />
         );
       })}
-      {/* {movies.map((movie) => {
-        return <Card key={movie.id} id={movie.id} title={movie.title} />;
-      })} */}
     </div>
   );
 };
