@@ -1,12 +1,32 @@
 import { Header } from "../../shared/Header";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Details.css";
 import { Movie } from "../../models/Movie";
+import { useLocation } from "react-router-dom";
+import { getMovieById } from "../../api/Movie";
 
-type Data = {
-  movie: Movie;
-};
-export const Details = ({ movie }: Data) => {
+export const Details = () => {
+  const location = useLocation();
+  const id = location.state.id;
+
+  const [movie, setMovie] = useState<Movie>({
+    id: "",
+    title: "",
+    poster_path: "",
+  });
+  useEffect(() => {
+    const getMovie = async () => {
+      const data = await getMovieById(id);
+      setMovie(data);
+      console.log(movie);
+    };
+    getMovie();
+  }, []);
+
+  if (!movie) {
+    return <div>WOT?</div>;
+  }
+
   return (
     <>
       <header className="header">
