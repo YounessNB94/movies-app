@@ -1,8 +1,14 @@
-.film-list {
-  display: grid;
+.movie-list {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 30px;
-  padding: 30px;
+  gap: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+
 }
 @media screen and (min-width: 768px) {
   .film-list {

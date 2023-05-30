@@ -8,12 +8,12 @@ export const Card = ({ id, title, name, poster_path }: Movie) => {
 
   return (
     <Link to="/details" state={{ id: id }}>
-      <div key={id} className="film-card">
+      <div key={id} className="movie-card">
         <img
           src={`http://image.tmdb.org/t/p/w500${poster_path}`}
           alt="Film 1"
         />
-        <h3>{title}</h3>
+        <h3>{title?title:name}</h3>
       </div>
     </Link>
   );

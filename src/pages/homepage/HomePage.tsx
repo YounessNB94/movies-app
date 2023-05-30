@@ -10,6 +10,7 @@ import {
   getMoviesByCategory,
   getMoviesBySearch,
 } from "../../api/MovieApiCalls";
+import "./HomePage.css";
 
 export const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -74,16 +75,18 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="main">
+    <div>
       <Header />
-      <div id="container">
-        <Filters
-          categoryList={categoryList}
-          radioClick={displayMoviesByCategory}
-          searchMovie={searchForMovie}
-        />
+      <div className="main">
+        <div id="container">
+          <Filters
+            categoryList={categoryList}
+            radioClick={displayMoviesByCategory}
+            searchMovie={searchForMovie}
+          />
+        </div>
+        <CardsList moviesList={searchField} />
       </div>
-      <CardsList moviesList={searchField} />
     </div>
   );
 };

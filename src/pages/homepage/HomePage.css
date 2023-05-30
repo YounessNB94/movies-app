@@ -4,7 +4,11 @@ body {
   font-family: Arial, sans-serif;
   background-color: #eeee;
 }
-
+.main{
+  display: flex;
+  flex-direction: row;
+  
+}
 #container {
   display: flex;
 }
