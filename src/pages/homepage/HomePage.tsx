@@ -1,115 +1,89 @@
 import React, { useEffect, useState } from "react";
-
-import "./HomePage.css";
+import { Categories } from "../../models/Categories";
+import { Movie } from "../../models/Movie";
 import { Header } from "../../shared/Header";
 import { Filters } from "./components/Filters";
 import { CardsList } from "./components/CardsList";
-import { getData } from "../../api/data";
-import { Categories } from "../../models/Categories.ts";
-import { MoviesList } from "../../models/MoviesList";
-import { Movie } from "../../models/Movie.ts";
-import { getMovieById } from "../../api/Movie.ts";
-import { Link, Outlet } from "react-router-dom";
+import {
+  getTrendMovies,
+  getCategories,
+  getMoviesByCategory,
+  getMoviesBySearch,
+} from "../../api/MovieApiCalls";
 
-export const Homepage = () => {
-    const [searchInput, setSearchInput] = useState("");
-    const [categoryList, setCategoryList] = useState<Categories | null>(null);
-    const [moviesArraysList, setMoviesArraysList] = useState<Movie[]>([
-      {
-        id: "",
-        title: "",
-        poster_path: "",
-      },
-    ]);
-
-    const [searchField, setSearchField] = useState(moviesArraysList);
-    const [movie, setMovie] = useState<Movie>({
+export const HomePage = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [categoryList, setCategoryList] = useState<Categories | null>(null);
+  const [moviesArraysList, setMoviesArraysList] = useState<Movie[]>([
+    {
       id: "",
       title: "",
+      name: "",
       poster_path: "",
-    });
+    },
+  ]);
 
-    const getCategories = async () => {
-      const categoryCall = await getData<Categories>(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=${
-          import.meta.env.VITE_API_KEY
-        }`
-      );
-      setCategoryList(categoryCall);
-    };
+  const [searchField, setSearchField] = useState(moviesArraysList);
 
+  //////////////////display trending movies//////////////////////////
+  useEffect(() => {
     const getMovies = async () => {
-      const movieCall = await getData<MoviesList>(
-        `https://api.themoviedb.org/3/trending/all/day?api_key=${
-          import.meta.env.VITE_API_KEY
-        }&page=1`
-      );
-
-      setMoviesArraysList(movieCall.results);
+      const data = await getTrendMovies();
+      setMoviesArraysList(data.results);
+      setSearchField(data.results);
     };
-    useEffect(() => {
-      getMovies();
-    }, []);
+    getMovies();
+  }, []);
 
-    const getMoviesByCategory = async (id: Number) => {
-      const movieCall = await getData<MoviesList>(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${
-          import.meta.env.VITE_API_KEY
-        }&language=fr-EU&with_genres=${id}`
-      );
-      setSearchField(movieCall.results);
+  //////////////////display categories//////////////////////////
+  useEffect(() => {
+    const categoryList = async () => {
+      const data = await getCategories();
+      setCategoryList(data);
     };
+    categoryList();
+  }, []);
 
-    ///////////////////////get movies
+  ///////////////////////////////searching
+  useEffect(() => {
+    const searchFiltering = async () => {
+      const data = await getMoviesBySearch(searchInput);
+      setSearchField(data.results.length > 0 ? data.results : moviesArraysList);
+    };
+    searchFiltering();
+  }, [moviesArraysList, searchInput]);
+  ///////////i don't get the first dependency
 
-    // useEffect(() => {
-    //   setMovies(moviesLists);
-    // }, []);
-
-    ////////////////////get category
-    useEffect(() => {
-      getCategories();
-    }, []);
-
-    //////////////////geting movie data
-    useEffect(() => {
-      const getMovie = async () => {
-        const data = await getMovieById("550");
-        setMovie(data);
+  //////////////////////////////////////////////
+  const displayMoviesByCategory = (event: React.MouseEvent<HTMLElement>) => {
+    const radio = event.target as HTMLInputElement;
+    const id = radio.id;
+    if (id) {
+      const moviesByCategory = async () => {
+        const data = await getMoviesByCategory(id);
+        setSearchField(data.results);
+        /////////////////////// not sure how it worked
       };
-      getMovie();
-    }, []);
+      moviesByCategory();
+    }
+  };
 
-    ///////////////////////////////searching
-    useEffect(() => {
-      const searchFiltering = () => {
-        const filtered = moviesArraysList.filter((movie) => {
-          return movie.title?.toLowerCase().includes(searchInput);
-        });
-        setSearchField(filtered);
-      };
-      searchFiltering();
-    }, [moviesArraysList, searchInput]);
+  ///////////////////////////////////////////////////////////////
+  const searchForMovie = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value.toLocaleLowerCase());
+  };
 
-    const toggleRadio = (event: React.MouseEvent<HTMLElement>) => {
-      const radio = event.target as HTMLInputElement;
-      getMoviesByCategory(+radio.id);
-    };
-
-    const searchForMovie = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchInput(event.target.value.toLocaleLowerCase());
-    };
   return (
     <div className="main">
       <Header />
       <div id="container">
         <Filters
           categoryList={categoryList}
-          radioClick={toggleRadio}
+          radioClick={displayMoviesByCategory}
           searchMovie={searchForMovie}
         />
-        <CardsList moviesList={searchField} />
       </div>
+      <CardsList moviesList={searchField} />
     </div>
   );
 };

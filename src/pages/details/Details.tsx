@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./Details.css";
 import { Movie } from "../../models/Movie";
 import { useLocation } from "react-router-dom";
-import { getMovieById } from "../../api/Movie";
+import { getMovieById } from "../../api/MovieApiCalls";
 
 export const Details = () => {
   const location = useLocation();

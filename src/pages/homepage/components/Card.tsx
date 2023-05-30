@@ -3,7 +3,9 @@ import { Movie } from "../../../models/Movie";
 import "./Card.css";
 import { Link } from "react-router-dom";
 
-export const Card = ({ id, title, poster_path }: Movie) => {
+export const Card = ({ id, title, name, poster_path }: Movie) => {
+  
+
   return (
     <Link to="/details" state={{ id: id }}>
       <div key={id} className="film-card">
