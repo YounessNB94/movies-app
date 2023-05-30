@@ -1,9 +1,9 @@
 import { Header } from "../../shared/Header";
 import React, { useEffect, useState } from "react";
 import "./Details.css";
-import { Movie } from "../../models/Movie";
+import { Movie } from "../../models/movie";
 import { useLocation } from "react-router-dom";
-import { getMovieById } from "../../api/MovieApiCalls";
+import { getMovieById } from "../../api/movieApiCalls";
 
 export const Details = () => {
   const location = useLocation();

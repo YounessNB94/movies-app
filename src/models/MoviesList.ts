@@ -1,5 +1,5 @@
-import { Movie } from "./Movie";
+import { Movie } from "./movie";
 
 export interface MoviesList {
-  results: [Movie];
+  results: Movie[];
 }
