@@ -1,8 +1,8 @@
-import { Categories } from "../../../models/Categories";
+import { Category } from "../../../models/Category";
 import "./filters.css";
 
 type FilterProps = {
-  categoryList: Categories | null;
+  categoryList: Category[] | null;
   radioClick: (event: React.MouseEvent<HTMLElement>) => void;
   searchMovie: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -28,7 +28,7 @@ export const Filters = ({
         <li>
           <h3>Genre</h3>
         </li>
-        {categoryList?.genres.map((value) => {
+        {categoryList?.map((value) => {
           return (
             <li key={value.id}>
               <div className="input-container option-style">

@@ -5,10 +5,9 @@
 import axios from "axios";
 import { Movie } from "../models/Movie";
 import { getData } from "./data";
-import { Categories } from "../models/Categories";
+import { Category } from "../models/Category";
 import { MoviesList } from "../models/MoviesList";
 const API_KEY = import.meta.env.VITE_API_KEY;
-
 
 export const getTrendMovies = async () => {
   const movieUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=1`;
@@ -17,7 +16,7 @@ export const getTrendMovies = async () => {
 
 export const getCategories = async () => {
   const movieUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
-  return await getData<Categories>(movieUrl);
+  return await getData<Category>(movieUrl);
 };
 
 export const getMoviesBySearch = async (search: string) => {
@@ -35,5 +34,3 @@ export const getMovieById = async (id: string) => {
   const movieUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
   return await getData<Movie>(movieUrl);
 };
-
-

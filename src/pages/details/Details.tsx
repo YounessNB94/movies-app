@@ -29,29 +29,31 @@ export const Details = () => {
 
   return (
     <>
-      <header className="header">
-        <a href="#">
-          <h1>MovieApp</h1>
-        </a>
-      </header>
-      <div className="main">
-        <div className="film-card">
-          <img
-            src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-            alt="image"
-          />
-        </div>
-        <div className="Details">
-          <h1>{movie.title ? movie.title : movie.name}</h1>
-          <div className="Genre">
-            <h2>Genre</h2>
-            {movie.genres?.map((type) => {
-              return <p key={type.id}>{type.name}</p>;
-            })}
+      <div>
+        <Header />
+        <div className="main">
+          <div className="film-card">
+            <img
+              src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+              alt="image"
+            />
           </div>
-          <div className="Description">
-            <h2>Overview</h2>
-            <p>{movie.overview}</p>
+
+          <div className="Details">
+            <h1>{movie.title ? movie.title : movie.name}</h1>
+            <div className="title-Genre">
+              <h2>Genre</h2>
+              <div className="Genre">
+                {movie.genres?.map((type) => {
+                  return <p key={type.id}>{type.name}</p>;
+                })}
+              </div>
+            </div>
+
+            <div className="Description">
+              <h2>Overview</h2>
+              <p>{movie.overview}</p>
+            </div>
           </div>
         </div>
       </div>

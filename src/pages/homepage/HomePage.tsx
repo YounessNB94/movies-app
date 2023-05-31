@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Categories } from "../../models/Categories";
+import { Category } from "../../models/Category";
 import { Movie } from "../../models/Movie";
 import { Header } from "../../shared/Header";
 import { Filters } from "./components/Filters";
@@ -14,7 +14,9 @@ import "./HomePage.css";
 
 export const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [categoryList, setCategoryList] = useState<Categories | null>(null);
+  const [categoryList, setCategoryList] = useState<Category [] | null>(
+    null
+  );
   const [moviesArraysList, setMoviesArraysList] = useState<Movie[]>([
     {
       id: "",
@@ -40,7 +42,7 @@ export const HomePage = () => {
   useEffect(() => {
     const categoryList = async () => {
       const data = await getCategories();
-      setCategoryList(data);
+      setCategoryList(data.genres);
     };
     categoryList();
   }, []);
@@ -76,16 +78,18 @@ export const HomePage = () => {
 
   return (
     <div>
-      <Header />
-      <div className="main">
-        <div id="container">
-          <Filters
-            categoryList={categoryList}
-            radioClick={displayMoviesByCategory}
-            searchMovie={searchForMovie}
-          />
+      <div>
+        <Header/>
+        <div className="main">
+          <div id="container">
+            <Filters
+              categoryList={categoryList}
+              radioClick={displayMoviesByCategory}
+              searchMovie={searchForMovie}
+            />
+          </div>
+          <CardsList moviesList={searchField} />
         </div>
-        <CardsList moviesList={searchField} />
       </div>
     </div>
   );
