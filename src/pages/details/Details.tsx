@@ -29,11 +29,7 @@ export const Details = () => {
 
   return (
     <>
-      <header className="header">
-        <a href="#">
-          <h1>MovieApp</h1>
-        </a>
-      </header>
+     <Header/>
       <div className="main">
         <div className="film-card">
           <img

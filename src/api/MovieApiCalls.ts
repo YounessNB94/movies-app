@@ -7,18 +7,18 @@ import { getData } from "./data";
 import { MoviesList } from "../models/moviesList";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-export const getTrendMovies = async () => {
-  const movieUrl = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&page=1`;
+export const getTrendMovies = async (pageNumber: number) => {
+  const movieUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&page=${pageNumber}`;
   return await getData<MoviesList>(movieUrl);
 };
 
-export const getMoviesBySearch = async (search: string) => {
-  const movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search}`;
+export const getMoviesBySearch = async (search: string, pageNumber: number) => {
+  const movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search}&page=${pageNumber}`;
   return await getData<MoviesList>(movieUrl);
 };
 
-export const getMoviesByCategory = async (id: string) => {
-  const movieUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=fr-EU&with_genres=${id}`;
+export const getMoviesByCategory = async (id: string, pageNumber: number) => {
+  const movieUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=fr-EU&with_genres=${id}&page=${pageNumber}`;
   return await getData<MoviesList>(movieUrl);
 };
 
