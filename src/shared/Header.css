@@ -10,3 +10,8 @@ header a {
   color: #b10000;
   text-decoration: none;
 }
+
+header a:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+}

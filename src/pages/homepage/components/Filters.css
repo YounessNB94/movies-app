@@ -89,6 +89,9 @@
   opacity: 0;
   cursor: pointer;
 }
+input :hover{
+  background-color: #343434;
+}
 
 .input-container input:checked + .radio-content {
   background-color: red;

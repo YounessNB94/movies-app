@@ -41,6 +41,7 @@ export const HomePage = () => {
     const categoryList = async () => {
       const data = await getCategories();
       setCategoryList(data.genres);
+      setCategoryList(data.genres);
     };
     categoryList();
   }, []);
@@ -76,16 +77,18 @@ export const HomePage = () => {
 
   return (
     <div>
-      <Header />
-      <div className="main">
-        <div id="container">
-          <Filters
-            categoryList={categoryList}
-            radioClick={displayMoviesByCategory}
-            searchMovie={searchForMovie}
-          />
+      <div>
+        <Header/>
+        <div className="main">
+          <div id="container">
+            <Filters
+              categoryList={categoryList}
+              radioClick={displayMoviesByCategory}
+              searchMovie={searchForMovie}
+            />
+          </div>
+          <CardsList moviesList={searchField} />
         </div>
-        <CardsList moviesList={searchField} />
       </div>
     </div>
   );
