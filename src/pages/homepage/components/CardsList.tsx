@@ -5,9 +5,12 @@ import { Link } from "react-router-dom";
 
 type movieList = {
   moviesList: Movie[];
+  pageNumber: number;
+  nextClick: (event: React.MouseEvent<HTMLElement>) => void;
+  prevClick: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
-export const CardsList = ({ moviesList }: movieList) => {
+export const CardsList = ({ moviesList, pageNumber, nextClick, prevClick }: movieList) => {
   return (
     <div className="movie-list">
       {moviesList.map((movie) => {
@@ -21,6 +24,15 @@ export const CardsList = ({ moviesList }: movieList) => {
           />
         );
       })}
+      <div>
+        <button onClick={prevClick} disabled={pageNumber === 1}>
+          previous page
+        </button>
+        <span>{pageNumber}</span>
+        <button onClick={nextClick} disabled={pageNumber === 1000}>
+          next page
+        </button>
+      </div>
     </div>
   );
 };
