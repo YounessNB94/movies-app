@@ -8,7 +8,7 @@ import {
   getTrendMovies,
   getMoviesByCategory,
   getMoviesBySearch,
-} from "../../api/movieApiCalls";
+} from "../../api/MovieApiCalls";
 import "./HomePage.css";
 import { getCategories } from "../../api/categoryApiCalls";
 import { log } from "console";
