@@ -3,9 +3,9 @@
 // getBySearch
 
 import axios from "axios";
-import { Movie } from "../models/Movie";
+import { Movie } from "../models/movie";
 import { getData } from "./data";
-import { Category } from "../models/Category";
+import { Category } from "../models/category";
 import { MoviesList } from "../models/MoviesList";
 const API_KEY = import.meta.env.VITE_API_KEY;
 

@@ -1,17 +1,20 @@
 import { Category } from "../../../models/category";
 import "./filters.css";
-
+import { debounce } from "lodash"; 
 type FilterProps = {
   categoryList: Category[];
   radioClick: (event: React.MouseEvent<HTMLElement>) => void;
   searchMovie: (event: React.ChangeEvent<HTMLInputElement>) => void;
+ categoryId: string;
 };
 
 export const Filters = ({
   radioClick,
   searchMovie,
   categoryList,
+  categoryId,
 }: FilterProps) => {
+  const debouncedSearchMovie = debounce(searchMovie, 300);
   return (
     <div className="sidebar">
       <ul className="menu" onClick={radioClick}>
@@ -21,7 +24,7 @@ export const Filters = ({
             <input
               type="search"
               placeholder="Search for movie..."
-              onChange={searchMovie}
+              onChange={debouncedSearchMovie}
             />
           </div>
         </li>
@@ -38,7 +41,11 @@ export const Filters = ({
                   id={`${value.id}`}
                   value={`${value.name}`}
                 />
-                <div className="radio-content">
+                <div
+                  className={`radio-content ${
+                    value.id.toString() === categoryId ? "check-radio" : ""
+                  }`}
+                >
                   <i className="fa-brands fa-quora"></i>
                   <label>{value.name}</label>
                 </div>

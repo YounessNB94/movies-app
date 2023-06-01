@@ -12,6 +12,7 @@ import {
 import "./HomePage.css";
 import { getCategories } from "../../api/categoryApiCalls";
 import { log } from "console";
+import { useLocation } from "react-router-dom";
 
 export const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -26,17 +27,22 @@ export const HomePage = () => {
   ]);
   const [searchField, setSearchField] = useState(moviesArraysList);
   const [pageNumber, setPageNumber] = useState(1);
-  const [categoryId, setCategoryId] = useState(1);
-  const [searchId, setSearchId] = useState(1);
-  const [catId, setCatId] = useState("");
-  const [searchEvent, setSearchEvent] = useState<
-    React.ChangeEvent<HTMLInputElement>
-  >();
+  const [showCat, setShowCat] = useState(true);
+  const [showSearch, setShowSearch] = useState(true);
+
+  const [searchEvent, setSearchEvent] =
+    useState<React.ChangeEvent<HTMLInputElement>>();
+
+  const location = useLocation();
+  const detailCategoryId = location?.state?.id?.toString();
+
+  const [catId, setCatId] = useState(detailCategoryId);
+
   //////////////////display trending movies//////////////////////////
   useEffect(() => {
-    if (searchId || categoryId) {
-      setSearchId(1);
-      setCategoryId(1);
+    if ((showSearch || showCat) && !(catId?.length > 0)) {
+      setShowSearch(true);
+      setShowCat(true);
       const getMovies = async () => {
         const data = await getTrendMovies(pageNumber);
         setMoviesArraysList(data.results);
@@ -59,30 +65,28 @@ export const HomePage = () => {
   ///////////////////////////////searching
   useEffect(() => {
     if (searchInput) {
-      setSearchId(1);
-      setCategoryId(1);
       const searchFiltering = async () => {
         const data = await getMoviesBySearch(searchInput, pageNumber);
-        setSearchField(
-          data.results.length > 0 ? data.results : moviesArraysList
-        );
+        setSearchField(data.results);
       };
       searchFiltering();
+    } else {
+      setSearchField(moviesArraysList);
     }
-  }, [moviesArraysList, searchInput, pageNumber]);
-  ///////////i don't get the first dependency
+  }, [searchInput, pageNumber]);
 
   //////////////////////////////////////////////
   const displayMoviesByCategory = (event: React.MouseEvent<HTMLElement>) => {
-    setSearchId(0);
-    setCategoryId(0);
+    setShowSearch(false);
+    setShowCat(false);
     setPageNumber(1);
     setSearchInput("");
-    if(searchEvent ){
-searchEvent.target.value = "";
+    if (searchEvent) {
+      searchEvent.target.value = "";
     }
     const radio = event.target as HTMLInputElement;
     const id = radio.id;
+
     setCatId(id);
   };
 
@@ -91,7 +95,9 @@ searchEvent.target.value = "";
       const moviesByCategory = async () => {
         const data = await getMoviesByCategory(catId, pageNumber);
         setSearchField(data.results);
-
+        setShowSearch(false);
+        setShowCat(false);
+        setSearchInput("");
         /////////////////////// not sure how it worked
       };
       moviesByCategory();
@@ -118,8 +124,8 @@ searchEvent.target.value = "";
           <Filters
             categoryList={categoryList}
             radioClick={displayMoviesByCategory}
-            searchMovie={searchForMovie}
-          />
+            searchMovie={searchForMovie} 
+            categoryId={catId}          />
         </div>
         <CardsList
           moviesList={searchField}

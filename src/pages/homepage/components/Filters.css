@@ -97,7 +97,9 @@ input :hover{
 .input-container input:checked + .radio-content {
   background-color: red;
 }
-
+.check-radio{
+   background-color: red;
+}
 .option-style {
   display: flex;
   flex-direction: column;

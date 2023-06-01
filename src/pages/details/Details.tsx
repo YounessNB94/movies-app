@@ -5,6 +5,7 @@ import { Movie } from "../../models/movie";
 import { useLocation } from "react-router-dom";
 import { getMovieById } from "../../api/MovieApiCalls";
 
+import { Link } from "react-router-dom";
 export const Details = () => {
   const location = useLocation();
   const id = location.state.id;
@@ -43,10 +44,23 @@ export const Details = () => {
             <h1>{movie.title ? movie.title : movie.name}</h1>
             <div className="title-Genre">
               <h2>Genre</h2>
-              <div className="Genre">
-                {movie.genres?.map((type) => {
-                  return <p key={type.id}>{type.name}</p>;
-                })}
+             <div className="Genre">
+  {movie.genres?.map((type) => {
+    return (
+      <Link
+        to={`/`}
+        key={type.id}
+        state={{ id: type.id }}
+        // onClick={() => {
+
+        //    window.location.href = `../homepage/HomePage/${type.id}`;
+        // }}
+      >
+        <button key={type.id}>{type.name}</button>
+      </Link>
+    );
+  })}
+
               </div>
             </div>
 
