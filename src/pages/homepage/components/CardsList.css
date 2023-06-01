@@ -10,6 +10,44 @@
   padding-bottom: 30px;
 
 }
+
+.pagination{
+ 
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+margin-top: 4rem;
+}
+.pagination span {
+  
+               
+                background: #000000;
+                color: #b10000;
+                border-radius: 8px;
+                padding: 14px 24px 16px;
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 1;
+}
+.pagination button{
+  
+                display: inline-block;
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+                background: #000000;
+                color: #b10000;
+                border-radius: 8px;
+                padding: 14px 24px 16px;
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 1;
+                transition: transform 200ms,background 200ms;
+                :hover{
+                    transform: translateY(-2px);
+                }
+                
+}
 @media screen and (min-width: 768px) {
   .film-list {
     grid-template-columns: repeat(4, 1fr);

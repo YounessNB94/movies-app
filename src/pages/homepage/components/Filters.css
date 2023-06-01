@@ -41,7 +41,7 @@
   width: 85%;
   border-radius: 0.5rem;
   height: 2rem;
-  padding: 0 15px;
+  /*  */
   box-shadow: 0 0 1px #ddd;
   display: flex;
   align-items: center;
@@ -52,6 +52,7 @@
   border: none;
   height: 100%;
   width: 100%;
+  padding: 15px;
 }
 ::placeholder {
   color: rgba(245, 222, 179, 0.584);
