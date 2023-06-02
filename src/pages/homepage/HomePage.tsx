@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Category } from "../../models/category";
-import { Movie } from "../../models/movie";
+import { Movie } from "../../models/Movie";
 import { Header } from "../../shared/Header";
 import { Filters } from "./components/Filters";
 import { CardsList } from "./components/CardsList";
@@ -9,15 +9,13 @@ import {
   getMoviesByCategory,
   getMoviesBySearch,
 } from "../../api/MovieApiCalls";
-import "./HomePage.css";
 import { getCategories } from "../../api/categoryApiCalls";
-import { log } from "console";
 import { useLocation } from "react-router-dom";
 
 export const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [categoryList, setCategoryList] = useState<Category[]>([]);
-  const [moviesArraysList, setMoviesArraysList] = useState<Movie[]>([
+  const [trendingMovies, setTrendingMovies] = useState<Movie[]>([
     {
       id: "",
       title: "",
@@ -25,34 +23,42 @@ export const HomePage = () => {
       poster_path: "",
     },
   ]);
-  const [searchField, setSearchField] = useState(moviesArraysList);
+  const [displayMovies, setDisplayMovies] = useState(trendingMovies);
   const [pageNumber, setPageNumber] = useState(1);
-  const [showCat, setShowCat] = useState(true);
-  const [showSearch, setShowSearch] = useState(true);
-
-  const [searchEvent, setSearchEvent] =
-    useState<React.ChangeEvent<HTMLInputElement>>();
-
+  const [isCategory, setIsCategory] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
+  // prettier-ignore
+  const [searchEvent, setSearchEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
   const location = useLocation();
   const detailCategoryId = location?.state?.id?.toString();
 
   const [catId, setCatId] = useState(detailCategoryId);
+  const [CatMovies, setCatMovies] = useState<Movie[]>([
+    {
+      id: "",
+      title: "",
+      name: "",
+      poster_path: "",
+    },
+  ]);
 
   //////////////////display trending movies//////////////////////////
   useEffect(() => {
-    if ((showSearch || showCat) && !(catId?.length > 0)) {
-      setShowSearch(true);
-      setShowCat(true);
+    //using this if statement will control the prehavior of displaying the trending movies
+    //only when page changes and when we don't have any search or a clicked category
+    if (!isSearch && !isCategory && !(catId?.length > 0)) {
+      setIsSearch(false);
+      setIsCategory(false);
       const getMovies = async () => {
         const data = await getTrendMovies(pageNumber);
-        setMoviesArraysList(data.results);
-        setSearchField(data.results);
+        setTrendingMovies(data.results);
+        setDisplayMovies(data.results);
       };
       getMovies();
     }
   }, [pageNumber]);
 
-  //////////////////display categories//////////////////////////
+  //////////////////display list of categories//////////////////////////
   useEffect(() => {
     const categoryList = async () => {
       const data = await getCategories();
@@ -67,18 +73,26 @@ export const HomePage = () => {
     if (searchInput) {
       const searchFiltering = async () => {
         const data = await getMoviesBySearch(searchInput, pageNumber);
-        setSearchField(data.results);
+        setDisplayMovies(data.results);
       };
       searchFiltering();
     } else {
-      setSearchField(moviesArraysList);
+      //if there no search input we would like to display the original movie list
+      //if category id exists we'll display the category list else the trending
+      if (catId) {
+        setDisplayMovies(CatMovies);
+      } else {
+        setDisplayMovies(trendingMovies);
+      }
+      setIsSearch(false);
+      setIsCategory(false);
     }
   }, [searchInput, pageNumber]);
 
   //////////////////////////////////////////////
   const displayMoviesByCategory = (event: React.MouseEvent<HTMLElement>) => {
-    setShowSearch(false);
-    setShowCat(false);
+    setIsSearch(true);
+    setIsCategory(true);
     setPageNumber(1);
     setSearchInput("");
     if (searchEvent) {
@@ -86,6 +100,7 @@ export const HomePage = () => {
     }
     const radio = event.target as HTMLInputElement;
     const id = radio.id;
+    console.log(id);
 
     setCatId(id);
   };
@@ -94,17 +109,17 @@ export const HomePage = () => {
     if (catId) {
       const moviesByCategory = async () => {
         const data = await getMoviesByCategory(catId, pageNumber);
-        setSearchField(data.results);
-        setShowSearch(false);
-        setShowCat(false);
+        setDisplayMovies(data.results);
+        setCatMovies(data.results);
+        setIsSearch(true);
+        setIsCategory(true);
         setSearchInput("");
-        /////////////////////// not sure how it worked
       };
       moviesByCategory();
     }
   }, [pageNumber, catId]);
-
   ///////////////////////////////////////////////////////////////
+
   const searchForMovie = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value.toLocaleLowerCase());
     setSearchEvent(event);
@@ -116,6 +131,7 @@ export const HomePage = () => {
   const handleClickPrev = () => {
     setPageNumber(pageNumber - 1);
   };
+
   return (
     <div>
       <Header />
@@ -124,11 +140,12 @@ export const HomePage = () => {
           <Filters
             categoryList={categoryList}
             radioClick={displayMoviesByCategory}
-            searchMovie={searchForMovie} 
-            categoryId={catId}          />
+            searchMovie={searchForMovie}
+            categoryId={catId}
+          />
         </div>
         <CardsList
-          moviesList={searchField}
+          moviesList={displayMovies}
           pageNumber={pageNumber}
           nextClick={handleClickNext}
           prevClick={handleClickPrev}

@@ -1,8 +1,4 @@
-// getAll
-// getById
-// getBySearch
-
-import { Movie } from "../models/movie";
+import { Movie } from "../models/Movie";
 import { getData } from "./data";
 import { MoviesList } from "../models/MoviesList";
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -22,7 +18,6 @@ export const getMoviesByCategory = async (id: string, pageNumber: number) => {
   return await getData<MoviesList>(movieUrl);
 };
 
-///////////////////url not working for all movies,,,,,,,,, fix
 export const getMovieById = async (id: string) => {
   const movieUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&include_adult=false`;
   return await getData<Movie>(movieUrl);
