@@ -65,7 +65,6 @@ export const HomePage = () => {
     const categoryList = async () => {
       const data = await getCategories();
       setCategoryList(data.genres);
-      setCategoryList(data.genres);
     };
     categoryList();
   }, []);
