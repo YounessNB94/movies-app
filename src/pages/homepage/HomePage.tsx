@@ -32,6 +32,8 @@ export const HomePage = () => {
   const location = useLocation();
   const detailCategoryId = location?.state?.id?.toString();
 
+  //in the detail page when clicking on a genre, we'll take that id
+  //and display the movie list of that genre in the homepage 
   const [catId, setCatId] = useState(detailCategoryId);
   const [CatMovies, setCatMovies] = useState<Movie[]>([
     {
@@ -45,7 +47,7 @@ export const HomePage = () => {
   //////////////////display trending movies//////////////////////////
   useEffect(() => {
     //using this if statement will control the prehavior of displaying the trending movies
-    //only when page changes and when we don't have any search or a clicked category
+    //only when page changes and when we don't have any search or a clicked category(from the homepage or the detail page)
     if (!isSearch && !isCategory && !(catId?.length > 0)) {
       setIsSearch(false);
       setIsCategory(false);
