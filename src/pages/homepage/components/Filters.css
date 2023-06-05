@@ -5,7 +5,6 @@
   background-color: #000;
   width: 12rem;
   padding: 0px;
-  height: auto;
   position: relative;
 }
 /* width */
@@ -30,7 +29,8 @@
   margin-left: auto;
   padding: 0;
   color: white;
-  /* width: 30%; */
+
+  background-color: #000;
   height: 100%;
   overflow-y: scroll;
   text-align: center;
@@ -90,15 +90,15 @@
   opacity: 0;
   cursor: pointer;
 }
-input :hover{
+input :hover {
   background-color: #343434;
 }
 
 .input-container input:checked + .radio-content {
   background-color: red;
 }
-.check-radio{
-   background-color: red;
+.check-radio {
+  background-color: red;
 }
 .option-style {
   display: flex;
@@ -117,4 +117,14 @@ input :hover{
 
 .round-option-style:active {
   transform: scale(0.8);
+}
+
+.main {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #323232;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

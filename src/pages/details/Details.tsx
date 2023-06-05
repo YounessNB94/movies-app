@@ -1,7 +1,7 @@
 import { Header } from "../../shared/Header";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Details.css";
-import { Movie } from "../../models/movie";
+import { Movie } from "../../models/Movie";
 import { useLocation } from "react-router-dom";
 import { getMovieById } from "../../api/MovieApiCalls";
 
@@ -25,14 +25,14 @@ export const Details = () => {
   }, []);
 
   if (!movie) {
-    return <div>WOT?</div>;
+    return <div>Not valid Movie</div>;
   }
 
   return (
     <>
       <div>
         <Header />
-        <div className="main">
+        <div className="main-detail">
           <div className="film-card">
             <img
               src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
@@ -44,23 +44,14 @@ export const Details = () => {
             <h1>{movie.title ? movie.title : movie.name}</h1>
             <div className="title-Genre">
               <h2>Genre</h2>
-             <div className="Genre">
-  {movie.genres?.map((type) => {
-    return (
-      <Link
-        to={`/`}
-        key={type.id}
-        state={{ id: type.id }}
-        // onClick={() => {
-
-        //    window.location.href = `../homepage/HomePage/${type.id}`;
-        // }}
-      >
-        <button key={type.id}>{type.name}</button>
-      </Link>
-    );
-  })}
-
+              <div className="Genre">
+                {movie.genres?.map((type) => {
+                  return (
+                    <Link to={`/`} key={type.id} state={{ id: type.id }}>
+                      <button key={type.id}>{type.name}</button>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 

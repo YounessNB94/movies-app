@@ -1,7 +1,6 @@
 import "./CardsList.css";
 import { Card } from "./Card";
-import { Movie } from "../../../models/movie";
-import { Link } from "react-router-dom";
+import { Movie } from "../../../models/Movie";
 
 type movieList = {
   moviesList: Movie[];
@@ -17,27 +16,35 @@ export const CardsList = ({
   prevClick,
 }: movieList) => {
   return (
-    <div>
+    <div
+      className={`movie-list-container ${
+        moviesList?.length === 0 ? " no-movie" : ""
+      }`}
+    >
       <div className="movie-list">
-        {moviesList.map((movie) => {
-          return (
-            <Card
-              key={movie.id}
-              id={movie.id}
-              title={movie.title}
-              name={movie.name}
-              poster_path={movie.poster_path}
-            />
-          );
-        })}
+        {moviesList.length === 0
+          ? "sorry no results"
+          : moviesList.map((movie) => {
+              return (
+                <Card
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title}
+                  name={movie.name}
+                  poster_path={movie.poster_path}
+                />
+              );
+            })}
       </div>
-      <div className="pagination">
+      <div
+        className={`pagination ${moviesList.length === 0 ? "no-buttons" : ""}`}
+      >
         <button onClick={prevClick} disabled={pageNumber === 1}>
-        {  "<< previous "}
+          {"<< previous "}
         </button>
         <span>{pageNumber}</span>
         <button onClick={nextClick} disabled={pageNumber === 1000}>
-        {"  next  >>"}
+          {"  next  >>"}
         </button>
       </div>
     </div>
