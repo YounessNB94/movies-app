@@ -11,7 +11,7 @@ import {
 } from "../../api/MovieApiCalls";
 import { getCategories } from "../../api/categoryApiCalls";
 import { useLocation } from "react-router-dom";
-
+import "./Homepage.css";
 export const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [categoryList, setCategoryList] = useState<Category[]>([]);
@@ -87,6 +87,7 @@ export const HomePage = () => {
       }
       setIsSearch(false);
       setIsCategory(false);
+      
     }
   }, [searchInput, pageNumber]);
 
@@ -107,7 +108,7 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    if (catId) {
+    if (catId && searchInput.length === 0) {
       const moviesByCategory = async () => {
         const data = await getMoviesByCategory(catId, pageNumber);
         setDisplayMovies(data.results);
@@ -124,6 +125,8 @@ export const HomePage = () => {
   const searchForMovie = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value.toLocaleLowerCase());
     setSearchEvent(event);
+    setPageNumber(1);
+    
   };
 
   const handleClickNext = () => {

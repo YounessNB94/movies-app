@@ -43,7 +43,10 @@ export const CardsList = ({
           {"<< previous "}
         </button>
         <span>{pageNumber}</span>
-        <button onClick={nextClick} disabled={pageNumber === 1000}>
+        <button
+          onClick={nextClick}
+          disabled={pageNumber === 1000 || moviesList.length < 20}
+        >
           {"  next  >>"}
         </button>
       </div>
