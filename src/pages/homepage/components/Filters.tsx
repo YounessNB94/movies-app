@@ -14,7 +14,7 @@ export const Filters = ({
   categoryList,
   categoryId,
 }: FilterProps) => {
-  const debouncedSearchMovie = debounce(searchMovie, 300);
+  const debouncedSearchMovie = debounce(searchMovie, 200);
   return (
     <div className="sidebar">
       <ul className="menu">

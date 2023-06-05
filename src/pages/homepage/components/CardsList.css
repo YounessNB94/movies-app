@@ -27,6 +27,7 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
+  margin-bottom: 1.5rem;
 }
 .pagination button {
   display: inline-block;
@@ -40,6 +41,7 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
+  margin-bottom: 1.5rem;
   transition: transform 200ms, background 200ms;
   :hover {
     transform: translateY(-2px);
@@ -56,4 +58,12 @@
 }
 .no-buttons {
   display: none;
+}
+@media screen and (max-width: 500px) {
+  .sidebar {
+    /* display: none; */
+   width: 6rem;
+   margin-left: 1rem;
+   font-size: smaller;
+  }
 }
