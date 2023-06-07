@@ -15,6 +15,7 @@ import "./Homepage.css";
 export const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [categoryList, setCategoryList] = useState<Category[]>([]);
+  // Nono, you can initiliazed with an empty array
   const [trendingMovies, setTrendingMovies] = useState<Movie[]>([
     {
       id: "",
@@ -23,18 +24,23 @@ export const HomePage = () => {
       poster_path: "",
     },
   ]);
+  // Why do you maintain two list of movies ? One is enough and you update it depending on the api call triggered 
   const [displayMovies, setDisplayMovies] = useState(trendingMovies);
   const [pageNumber, setPageNumber] = useState(1);
+  // I don't think you need this many state variables.
+  // Conditioning with searchEvent and CatId is largely enough
   const [isCategory, setIsCategory] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   // prettier-ignore
   const [searchEvent, setSearchEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
+  // Why using the location ? the "Link" from react-router-dom does that for you
   const location = useLocation();
   const detailCategoryId = location?.state?.id?.toString();
 
   //in the detail page when clicking on a genre, we'll take that id
   //and display the movie list of that genre in the homepage 
   const [catId, setCatId] = useState(detailCategoryId);
+  // Same here, an empty array is enough
   const [CatMovies, setCatMovies] = useState<Movie[]>([
     {
       id: "",
@@ -61,6 +67,7 @@ export const HomePage = () => {
   }, [pageNumber]);
 
   //////////////////display list of categories//////////////////////////
+  // You could put this call api in the concerned component (Filters.tsx)
   useEffect(() => {
     const categoryList = async () => {
       const data = await getCategories();
