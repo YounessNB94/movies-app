@@ -46,6 +46,7 @@ export const Details = () => {
               <h2>Genre</h2>
               <div className="Genre">
                 {movie.genres?.map((type) => {
+                  // Why do you use a Link here ? YOu don't need to handle a click in this part of the app
                   return (
                     <Link to={`/`} key={type.id} state={{ id: type.id }}>
                       <button key={type.id}>{type.name}</button>
