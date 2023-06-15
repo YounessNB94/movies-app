@@ -9,6 +9,7 @@ import {
   getMoviesByCategory,
   getMoviesBySearch,
 } from "../../api/MovieApiCalls";
+import {ChatComponent} from "./components/ChatComponent";
 import { getCategories } from "../../api/categoryApiCalls";
 import { useLocation } from "react-router-dom";
 import "./Homepage.css";
@@ -154,6 +155,7 @@ export const HomePage = () => {
           nextClick={handleClickNext}
           prevClick={handleClickPrev}
         />
+        <ChatComponent />
       </div>
     </div>
   );
