@@ -1,16 +1,23 @@
+import { useState } from "react";
+import { Card } from "./Card";
 
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import {
+  MainContainer,
+  ChatContainer,
+  MessageList,
+  Message,
+  MessageInput,
+  TypingIndicator,
+} from "@chatscope/chat-ui-kit-react";
 
+const OPENAIAPI_KEY = import.meta.env.VITE_OPENAI_KEY;
 
-import { useState } from 'react'
-
-import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
-
-const OPENAIAPI_KEY = "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";
-
-const systemMessage = { 
-  "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
-}
+const systemMessage = {
+  role: "system",
+  content:
+    "Explain things like you're talking to a user  who is looking for informations about movies, an if they ask something unrelated to movies, do not answer"
+};
 type MessageDirection = "incoming" | "outgoing";
 export const ChatComponent = () => {
   interface MessageModel {
@@ -22,39 +29,32 @@ export const ChatComponent = () => {
   }
   const [messages, setMessages] = useState<MessageModel[]>([
     {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
+      message:
+        "Hello, I'm ChatGPT! Do you want to know something about a movie? I can also help you find a movie if you give me details about it!",
       sender: "ChatGPT",
     },
   ]);
 
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSend = async (message: string)  => {
-    const newMessage = {
-      message,
-      direction: "outgoing",
-      sender: "user",
-      
-    };
+ const handleSend = async (message: string) => {
+   const newMessage: MessageModel = {
+     message,
+     direction: "outgoing",
+     sender: "user",
+   };
 
-    const newMessages = [...messages, newMessage];
+   const newMessages = [...messages, newMessage];
 
-    setMessages(newMessages);
+   setMessages(newMessages);
 
-    // Initial system message to determine ChatGPT functionality
-    // How it responds, how it talks, etc.
-    setIsTyping(true);
-    await processMessageToChatGPT(newMessages);
-  };
+   setIsTyping(true);
+   await processMessageToChatGPT(newMessages);
+ };
 
   async function processMessageToChatGPT(
     chatMessages: { message: string; sender: string }[]
   ) {
-    // messages is an array of messages
-    // Format messages for chatGPT API
-    // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
-    // So we need to reformat
-
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
       if (messageObject.sender === "ChatGPT") {
@@ -65,15 +65,10 @@ export const ChatComponent = () => {
       return { role: role, content: messageObject.message };
     });
 
-    // Get the request body set up with the model we plan to use
-    // and the messages which we formatted above. We add a system message in the front to'
-    // determine how we want chatGPT to act.
     const apiRequestBody = {
       model: "gpt-3.5-turbo",
-      messages: [
-        systemMessage, // The system message DEFINES the logic of our chatGPT
-        ...apiMessages, // The messages from our chat with ChatGPT
-      ],
+      messages: [systemMessage, ...apiMessages],
+      temperature: 0.1,
     };
 
     await fetch("https://api.openai.com/v1/chat/completions", {
@@ -102,7 +97,7 @@ export const ChatComponent = () => {
 
   return (
     <div className="App">
-      <div style={{ position: "relative", height: "800px", width: "700px" }}>
+      <div style={{ position: "relative", height: "400px", width: "300px" }}>
         <MainContainer>
           <ChatContainer>
             <MessageList
@@ -121,7 +116,8 @@ export const ChatComponent = () => {
                     model={{
                       message: message.message,
                       sender: message.sender,
-                      direction: message.direction,
+                      direction: message.direction || "incoming",
+                      position: "normal",
                     }}
                   />
                 );
@@ -134,5 +130,3 @@ export const ChatComponent = () => {
     </div>
   );
 };
-
-
